@@ -7,6 +7,7 @@ Created on Wed May 18 23:42:23 2022
 
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 # Obtener la data
 
@@ -24,4 +25,17 @@ data.Age = pd.cut(data.Age, ranges, labels=ranges_names)
 data.Age.value_counts()
 
 data.dropna(axis=0, how='any', inplace=True)
+
+# Partir la data en dos
+
+data_train = data[:384]
+data_test = data[384:]
+
+x = np.array(data_train.drop(['Outcome'], axis=1))
+y = np.array(data_test.Outcome)
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+
+x_test_out = np.array(data_test.drop(['Outcome'], axis=1))
+y_test_out = np.array(data_test.Outcome)
 
